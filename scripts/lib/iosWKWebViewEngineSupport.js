@@ -99,7 +99,7 @@ function loadProjectFile_cordova_5_and_6() {
 
 function loadProjectFile_cordova_7_and_above() {
   var pbxPath = path.join(iosPlatformPath, projectName + '.xcodeproj', 'project.pbxproj');
-  var xcodeproj = context.requireCordovaModule('xcode').project(pbxPath);
+  var xcodeproj = require('xcode').project(pbxPath);
   xcodeproj.parseSync();
 
   var saveProj = function() {
@@ -121,16 +121,16 @@ function loadProjectFile_cordova_7_and_above() {
  * @return {String} name of the project
  */
 function getProjectName(ctx, projectRoot) {
-  var cordova_util = ctx.requireCordovaModule('cordova-lib/src/cordova/util');
+  var cordova_util = require('cordova-lib/src/cordova/util');
   var xml = cordova_util.projectConfig(projectRoot);
   var ConfigParser;
 
   // If we are running Cordova 5.4 or abova - use parser from cordova-common.
   // Otherwise - from cordova-lib.
   try {
-    ConfigParser = ctx.requireCordovaModule('cordova-common/src/ConfigParser/ConfigParser');
+    ConfigParser = require('cordova-common/src/ConfigParser/ConfigParser');
   } catch (e) {
-    ConfigParser = ctx.requireCordovaModule('cordova-lib/src/configparser/ConfigParser')
+    ConfigParser = require('cordova-lib/src/configparser/ConfigParser')
   }
 
   return new ConfigParser(xml).name();
